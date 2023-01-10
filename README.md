@@ -1,41 +1,19 @@
-# Introduction
-Your task is to implement a secret server. The secret server can be used to store and share secrets using a random generated URL. But the secret can be read only a limited number of times after that it will expire and won’t be available. The secret may have a TTL (Time to live). After the expiration time the secret won’t be available anymore.
-Write code that you can be proud of :)
-# Task
-Implementation: You have to implement the Secret Server API, with NodeJS + express.js framework on the backend + MongoDb (you can use any additonal library). It is recommended to store the data using encryption. Provide tests for the backend.
-Build a minimal, but functional frontend in VueJS with the abilwqsxcity to create and view secrets (if the hash is known)
-You can also (but not required) use Nuxt.js to serve the backend and frontend from the same process.
-Share the code: Upload the code to any free git hosting environment (Github, Gitlab, etc....)
-Running your code: Provide instructions how to run your code, docker-compose is preferred.
-# API
-**URL** : `/api/secret/[hash]`
-**Method** : `GET`
-**Auth required** : NO
-**Response**
-```json
-{
-  "hash": "[The hash of the string]",
-  "secretText": "[The original text]",
-  "createdAt": "[The Timestamp the secret was created]",
-  "expiresAt": "[The Timestamp the secret if TTL is given]",
-  "remainingViews": 0
-}
+# INSTRUCTIONS
+To running the code, please follow the instructions below: 
+1. Download and install Node.js (https://nodejs.org/en/download/)
+2. Download and install Mongosh (https://downloads.mongodb.com/compass/mongosh-1.6.2-win32-x64.zip)
+3. Download and install MongoDB (https://fastdl.mongodb.org/windows/mongodb-windows-x86_64-6.0.3.zip)
+4. Open the terminal, navigate to the folder of the mongosh and use the following codes to create an own DB: 
+    I. mongosh
+    II. show dbs  //to check your DBs
+    III. use secret 
+    IV. show collections //to check collections in the DB
+    V. db.createCollection("secrets")
+    VI. db.secrets.find() //to check the objects in the collection
 
-```
-**URL** : `/api/secret/`
-**Method** : `POST`
-**Auth required** : NO
-**POST /secret**
-```json
-{
-    "secret": "[This text that will be saved as a secret]",
-    "expireAfterViews": "[The secret won't be available after the given number of views]",
-    "expireAfter": "[The secret won't be available after the given time. The value is provided in minutes. 0 means never expires]"
-}
-
-```
-**Response** : Same as `/api/secret/[hash]`
-
-# Questions
-It is totaly OK to ask if something is not clear.
-
+Please open the VUE folder in your development environment. Open the terminal and run the codes below: 
+1. npm i
+2. nodemon index.js
+3. Open a browser: http://localhost:3000/
+4. Share a secret and get it back at the given parameters
+For more info, please check index.js
