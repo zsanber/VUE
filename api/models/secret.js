@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const secretSchema= new mongoose.Schema({
+    hash: {
+        type: String, 
+        required: true
+    }, 
     secret: {
         type: String, 
         required: true

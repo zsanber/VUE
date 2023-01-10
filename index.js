@@ -22,18 +22,15 @@ app.use(express.json());
 app.use(methodOverride('_method'));
 app.use(express.static(__dirname + '/app/'));
 
-// Hash
-function hash(string) {
-    return createHash('sha256').update(string).digest('hex');
-  }
 
-  
 // -- ROOTS
 // POST new secret
 app.post('/api/secret', async (req, res) => {
     const newSecret = new Secret();
     newSecret.secret = req.body.secret; 
     newSecret.remainingViews = req.body.remainingViews;
+    // Hash
+    newSecret.hash = createHash('sha256').update(newSecret.secret).digest('hex');
 
     // save expiration time
     var expiresAt = new Date();
@@ -51,7 +48,7 @@ app.post('/api/secret', async (req, res) => {
     
     // JSON response
     res.json({
-        "hash": newSecret.id,
+        "hash": newSecret.hash,
         "secret": newSecret.secret,
         "createdAt": newSecret.createdAt,
         "expiresAt": newSecret.expiresAt,
@@ -63,7 +60,7 @@ app.post('/api/secret', async (req, res) => {
 app.get('/api/secret/:hash', async (req,res) =>{
     const currentDate = new Date();
     const {hash} = req.params;
-    const secret = await Secret.findById({ _id: hash });    
+    const secret = await Secret.findOne({ hash: hash });    
     
     // availability check
     if(secret == null) {
@@ -79,7 +76,7 @@ app.get('/api/secret/:hash', async (req,res) =>{
 
         // JSON response
         res.json({
-            "hash": secret.id,
+            "hash": secret.hash,
             "secret": secret.secret,
             "createdAt": secret.createdAt,
             "expiresAt": secret.expiresAt,
@@ -93,3 +90,4 @@ app.listen(3000, () => {
     console.log("Listening on port 3000")
 })
 
+module.exports = app
