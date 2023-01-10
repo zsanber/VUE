@@ -1,11 +1,10 @@
 let server = require('../index.js');
 let chai = require('chai');
-let request = require('supertest'); //?????
 const chaiHttp = require("chai-http");
 const { response } = require('../index.js');
 let should = chai.should();
 
-chai.should(); //?????
+chai.should();
 chai.use(chaiHttp);
 
 describe('API TESTS', function() {

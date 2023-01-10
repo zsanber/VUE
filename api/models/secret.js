@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Schema validation
 const secretSchema= new mongoose.Schema({
     hash: {
         type: String, 

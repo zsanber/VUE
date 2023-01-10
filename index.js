@@ -6,7 +6,7 @@ const { createHash } = require('crypto');
 
 //integrate mongoose
 const mongoose = require('mongoose');
-//mongoose.set('strictQuery', false);
+mongoose.set('strictQuery', false);
 mongoose.connect('mongodb://127.0.0.1:27017/secret')
     .then(() => {
         console.log("MONGO connection open!")
@@ -36,7 +36,8 @@ app.post('/api/secret', async (req, res) => {
     var expiresAt = new Date();
     
     if(req.body.expiresAfter > 0) {
-        expiresAt = expiresAt.setMinutes(expiresAt.getMinutes() + req.body.expiresAfter);   
+        expiresAt = expiresAt.setMinutes(expiresAt.getMinutes() + req.body.expiresAfter);
+        console.log(newSecret)   
     }
     else {
         expiresAt = null;
