@@ -6,6 +6,7 @@ const { createHash } = require('crypto');
 
 //integrate mongoose
 const mongoose = require('mongoose');
+//mongoose.set('strictQuery', false);
 mongoose.connect('mongodb://127.0.0.1:27017/secret')
     .then(() => {
         console.log("MONGO connection open!")
@@ -16,14 +17,13 @@ mongoose.connect('mongodb://127.0.0.1:27017/secret')
     })
 const Secret = require('./api/models/secret');
 
-
 // middleware
 app.use(express.json());
 app.use(methodOverride('_method'));
 app.use(express.static(__dirname + '/app/'));
 
 
-// -- ROOTS
+// ROUTES definition
 // POST new secret
 app.post('/api/secret', async (req, res) => {
     const newSecret = new Secret();
@@ -61,9 +61,9 @@ app.get('/api/secret/:hash', async (req,res) =>{
     const currentDate = new Date();
     const {hash} = req.params;
     const secret = await Secret.findOne({ hash: hash });    
-    
+
     // availability check
-    if(secret == null) {
+    if(secret == null) { 
         res.status(404);
     }
     else if (secret.remainingViews < 1 || currentDate > secret.expiresAt) {
